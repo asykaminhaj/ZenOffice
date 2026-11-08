@@ -1,0 +1,8 @@
+/* zen-pal-html: palet ikon duotone html (Android) */
+:root { --zen-ink:#1f2328; --zen-card-bg:#ffffff; --zen-accent:#0a2a7a; --zen-o:#f5b800; --zi-b:#0a2a7a; --zi-bs:#dfe6fb; --zi-o:#f5b800; }
+[data-theme='dark'] { --zen-ink:#e6e6e6; --zen-card-bg:#2c2c2c; --zen-accent:#7aa2ff; --zen-o:#ffd24d; --zi-b:#7aa2ff; --zi-bs:#1d2f66; --zi-o:#ffd24d; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']):not([data-theme='dark']) { --zen-ink:#e6e6e6; --zen-card-bg:#2c2c2c; --zen-accent:#7aa2ff; --zen-o:#ffd24d; --zi-b:#7aa2ff; --zi-bs:#1d2f66; --zi-o:#ffd24d; }
+}
+.zen-v2 .o { stroke: var(--zen-o); }
+.zen-v2 .of { fill: var(--zen-o); }

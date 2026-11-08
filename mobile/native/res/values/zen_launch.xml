@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="zen_splash_bg">#0A1224</color>
+    <style name="ZenLaunch" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@color/zen_splash_bg</item>
+    </style>
+</resources>

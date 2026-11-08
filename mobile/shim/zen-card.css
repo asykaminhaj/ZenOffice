@@ -1,0 +1,53 @@
+/* zen-card: ribbon berbentuk card (Android) untuk Slides, Sheets, PDF. Hanya bentuk; aksen tiap app tidak diubah. */
+:root {
+  --zc-bar: linear-gradient(180deg, #ececef 0%, #e6e7e9 100%);
+  --zc-card: #ffffff;
+  --zc-border: rgb(0 0 0 / 8%);
+  --zc-shadow: 0 2px 10px rgb(0 0 0 / 8%);
+}
+[data-theme='dark'] {
+  --zc-bar: linear-gradient(180deg, #282828 0%, #252525 100%);
+  --zc-card: #2c2c2c;
+  --zc-border: rgb(255 255 255 / 8%);
+  --zc-shadow: 0 2px 12px rgb(0 0 0 / 35%);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']):not([data-theme='dark']) {
+    --zc-bar: linear-gradient(180deg, #282828 0%, #252525 100%);
+    --zc-card: #2c2c2c;
+    --zc-border: rgb(255 255 255 / 8%);
+    --zc-shadow: 0 2px 12px rgb(0 0 0 / 35%);
+  }
+}
+
+/* Slides + PDF: .ribbon > .ribbon-tabs + .ribbon-body */
+.ribbon:not([data-ribbon-body]) { background: var(--zc-bar); border-bottom: 0; }
+.ribbon:not([data-ribbon-body]) .ribbon-tabs { padding-top: 6px; gap: 4px; }
+.ribbon .ribbon-body {
+  background: var(--zc-card); border: 1px solid var(--zc-border);
+  border-radius: 14px; box-shadow: var(--zc-shadow); margin: 6px 8px 8px;
+}
+.ribbon .ribbon-tab-file { border-radius: 10px; padding: 6px 18px; font-weight: 600; }
+/* zen-file-hover: .ribbon-tab:hover (warna aksen) tidak boleh menimpa teks tombol File */
+.ribbon .ribbon-tab-file:hover, .ribbon .ribbon-tab-file.open {
+  color: var(--slides-on-accent, var(--docs-on-accent, #fff));
+}
+
+/* Sheets: baris tab dan pita adalah saudara; pita = .ribbon[data-ribbon-body] */
+.ribbon-tabs { background: var(--zc-bar); padding-top: 6px; }
+.ribbon[data-ribbon-body] {
+  background: var(--zc-card); border: 1px solid var(--zc-border); border-bottom: 1px solid var(--zc-border);
+  border-radius: 14px; box-shadow: var(--zc-shadow); margin: 6px 8px 8px;
+}
+:has(> .ribbon-tabs):has(> .ribbon[data-ribbon-body]) { background: var(--zc-bar); }
+
+/* zen-tab-anim: transisi label + garis bawah tab aktif (isi ribbon dianimasikan oleh zen-tab-anim.js) */
+.ribbon-tabs .ribbon-tab:not(.ribbon-tab-file),
+.ribbon-tabs > button:not(.qa-btn):not(.autosave-toggle) { transition: color .2s ease, background-color .2s ease, opacity .2s ease; }
+.ribbon-tabs .ribbon-tab.active::after,
+.ribbon-tabs > button:not(.qa-btn).active::after { animation: zen-tab-line .26s cubic-bezier(.2,.7,.2,1) backwards; }
+@keyframes zen-tab-line { from { clip-path: inset(0 50% 0 50%); opacity: .4; } to { clip-path: inset(0 0 0 0); opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .ribbon-tabs .ribbon-tab:not(.ribbon-tab-file), .ribbon-tabs > button:not(.qa-btn):not(.autosave-toggle) { transition: none; }
+  .ribbon-tabs .ribbon-tab.active::after, .ribbon-tabs > button:not(.qa-btn).active::after { animation: none; }
+}

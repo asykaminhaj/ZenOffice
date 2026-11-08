@@ -1,0 +1,8 @@
+/* zen-pal-markdown: palet ikon duotone markdown (Android) */
+:root { --zen-ink:#1f2328; --zen-card-bg:#ffffff; --zen-accent:#7c3aed; --zen-o:#b794f6; --zi-b:#7c3aed; --zi-bs:#ede3ff; --zi-o:#b794f6; }
+[data-theme='dark'] { --zen-ink:#e6e6e6; --zen-card-bg:#2c2c2c; --zen-accent:#b794ff; --zen-o:#d6bcff; --zi-b:#b794ff; --zi-bs:#3b2a66; --zi-o:#d6bcff; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']):not([data-theme='dark']) { --zen-ink:#e6e6e6; --zen-card-bg:#2c2c2c; --zen-accent:#b794ff; --zen-o:#d6bcff; --zi-b:#b794ff; --zi-bs:#3b2a66; --zi-o:#d6bcff; }
+}
+.zen-v2 .o { stroke: var(--zen-o); }
+.zen-v2 .of { fill: var(--zen-o); }

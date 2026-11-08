@@ -1,0 +1,22 @@
+/* zen-pal-pdf: palet ikon duotone pdf (Android) */
+:root { --zen-ink:#1f2328; --zen-card-bg:#ffffff; --zen-accent:#d32f2f; --zen-o:#e57373; --zi-b:#d32f2f; --zi-bs:#fdeaea; --zi-o:#e57373; }
+[data-theme='dark'] { --zen-ink:#e6e6e6; --zen-card-bg:#2c2c2c; --zen-accent:#ff6b6b; --zen-o:#ff9e9e; --zi-b:#ff6b6b; --zi-bs:#4a2020; --zi-o:#ff9e9e; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']):not([data-theme='dark']) { --zen-ink:#e6e6e6; --zen-card-bg:#2c2c2c; --zen-accent:#ff6b6b; --zen-o:#ff9e9e; --zi-b:#ff6b6b; --zi-bs:#4a2020; --zi-o:#ff9e9e; }
+}
+.zen-v2 .o { stroke: var(--zen-o); }
+.zen-v2 .of { fill: var(--zen-o); }
+
+/* zen-pdf-accent-red: semua aksen PDF merah murni (beda dari Slides) */
+:root { --accent:#d32f2f !important; --accent-dark:#b71c1c !important; --accent-soft:#fdeaea !important; }
+[data-theme='dark'] { --accent:#ff6b6b !important; --accent-dark:#e55353 !important; --accent-soft:#4a2020 !important; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']):not([data-theme='dark']) { --accent:#ff6b6b !important; --accent-dark:#e55353 !important; --accent-soft:#4a2020 !important; }
+}
+
+/* zen-pdf-select-red: tint seleksi/hover PDF merah murni */
+:root { --pdf-select:#d32f2f !important; --pdf-select-glow:rgb(211 47 47 / 90%) !important; --pdf-sign-drop-bg:rgb(211 47 47 / 6%) !important; --pdf-link-hover-bg:rgb(211 47 47 / 12%) !important; --pdf-link-hover-ring:rgb(211 47 47 / 35%) !important; --pdf-textedit-ring:rgb(211 47 47 / 90%) !important; --pdf-textedit-hover-bg:rgb(211 47 47 / 10%) !important; --pdf-textblock-ring-hover:rgb(211 47 47 / 65%) !important; --pdf-textblock-hover-bg:rgb(211 47 47 / 5%) !important; --pdf-imgedit-hover-bg:rgb(211 47 47 / 8%) !important; --pdf-imgedit-ghost-bg:rgb(211 47 47 / 6%) !important; }
+[data-theme='dark'] { --pdf-select:#ff6b6b !important; --pdf-select-glow:rgb(255 107 107 / 90%) !important; --pdf-sign-drop-bg:rgb(255 107 107 / 6%) !important; --pdf-link-hover-bg:rgb(255 107 107 / 12%) !important; --pdf-link-hover-ring:rgb(255 107 107 / 35%) !important; --pdf-textedit-ring:rgb(255 107 107 / 90%) !important; --pdf-textedit-hover-bg:rgb(255 107 107 / 10%) !important; --pdf-textblock-ring-hover:rgb(255 107 107 / 65%) !important; --pdf-textblock-hover-bg:rgb(255 107 107 / 5%) !important; --pdf-imgedit-hover-bg:rgb(255 107 107 / 8%) !important; --pdf-imgedit-ghost-bg:rgb(255 107 107 / 6%) !important; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']):not([data-theme='dark']) { --pdf-select:#ff6b6b !important; --pdf-select-glow:rgb(255 107 107 / 90%) !important; --pdf-sign-drop-bg:rgb(255 107 107 / 6%) !important; --pdf-link-hover-bg:rgb(255 107 107 / 12%) !important; --pdf-link-hover-ring:rgb(255 107 107 / 35%) !important; --pdf-textedit-ring:rgb(255 107 107 / 90%) !important; --pdf-textedit-hover-bg:rgb(255 107 107 / 10%) !important; --pdf-textblock-ring-hover:rgb(255 107 107 / 65%) !important; --pdf-textblock-hover-bg:rgb(255 107 107 / 5%) !important; --pdf-imgedit-hover-bg:rgb(255 107 107 / 8%) !important; --pdf-imgedit-ghost-bg:rgb(255 107 107 / 6%) !important; }
+}

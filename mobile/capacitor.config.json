@@ -1,0 +1,11 @@
+{
+  "appId": "com.minhaj.zenoffice",
+  "appName": "ZenOffice",
+  "webDir": "www",
+  "android": {
+    "allowMixedContent": false
+  },
+  "server": {
+    "androidScheme": "https"
+  }
+}

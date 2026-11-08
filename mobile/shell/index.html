@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en" data-theme="system" class="zs-boot">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
+    />
+    <meta name="color-scheme" content="light dark" />
+    <title>ZenOffice</title>
+    <link rel="icon" href="./shim/assets/file-docx.png" />
+    <style id="zs-splash-css">
+      html.zs-boot{background:#070b14}
+      #zs-splash{position:fixed;inset:0;z-index:2147483647;display:grid;place-items:center;overflow:hidden;color:#fff;
+        background:radial-gradient(120% 90% at 50% 38%,#12254a 0%,#0a1224 45%,#060a14 100%);
+        font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+        transition:opacity .5s ease,transform .5s cubic-bezier(.4,0,.2,1),filter .5s}
+      #zs-splash.zs-out{opacity:0;transform:scale(1.06);filter:blur(6px);pointer-events:none}
+      #zs-splash .zs-glow{position:absolute;width:75vmin;height:75vmin;border-radius:50%;
+        background:radial-gradient(circle,rgba(63,153,255,.42),rgba(63,153,255,0) 65%);animation:zs-breathe 3.2s ease-in-out infinite}
+      #zs-splash .zs-stage{position:relative;display:flex;flex-direction:column;align-items:center;gap:clamp(16px,3.4vmin,30px)}
+      #zs-splash .zs-mark{position:relative;width:clamp(104px,24vmin,176px);aspect-ratio:1}
+      #zs-splash .zs-ring{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+      #zs-splash .zs-ring-base{fill:none;stroke:rgba(255,255,255,.08);stroke-width:1.2}
+      #zs-splash .zs-ring-draw{fill:none;stroke:url(#zs-grad);stroke-width:2.2;stroke-linecap:round;stroke-dasharray:289;stroke-dashoffset:289;
+        transform-origin:50% 50%;animation:zs-draw 1.2s cubic-bezier(.4,0,.2,1) .1s forwards,zs-spin 6s linear 1.3s infinite}
+      #zs-splash .zs-orbit{transform-origin:50% 50%;animation:zs-spin 2.6s linear .3s infinite}
+      #zs-splash .zs-orbit circle{fill:#8cc8ff;filter:drop-shadow(0 0 4px #3f99ff)}
+      #zs-splash .zs-logo-wrap{position:absolute;inset:13%;border-radius:22%;overflow:hidden;opacity:0;transform:scale(.55) rotate(-8deg);
+        box-shadow:0 18px 50px rgba(15,127,255,.5);animation:zs-pop .9s cubic-bezier(.2,1.3,.3,1) .2s forwards}
+      #zs-splash .zs-logo-wrap img{width:100%;height:100%;object-fit:cover;display:block}
+      #zs-splash .zs-logo-wrap::after{content:"";position:absolute;inset:-20% auto -20% -60%;width:45%;
+        background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-18deg);animation:zs-sweep 1.1s ease-in-out 1.1s forwards}
+      #zs-splash .zs-word{display:flex;font-size:clamp(28px,6.6vmin,48px);letter-spacing:.02em;line-height:1}
+      #zs-splash .zs-word span{opacity:0;display:inline-block;font-weight:700;animation:zs-rise .6s cubic-bezier(.2,.9,.3,1) forwards;animation-delay:calc(.75s + var(--i) * .055s)}
+      #zs-splash .zs-word .zs-zen{font-weight:300;color:#8cc8ff}
+      #zs-splash .zs-tag{font-size:clamp(11px,2.1vmin,14px);letter-spacing:.2em;line-height:1.8;text-align:center;max-width:88vw;text-transform:uppercase;color:rgba(255,255,255,.55);opacity:0;animation:zs-fade .8s ease 1.4s forwards}
+      #zs-splash .zs-bar{width:clamp(120px,30vmin,200px);height:3px;border-radius:3px;background:rgba(255,255,255,.12);overflow:hidden;opacity:0;animation:zs-fade .5s ease 1.2s forwards}
+      #zs-splash .zs-bar i{display:block;height:100%;width:40%;border-radius:3px;background:linear-gradient(90deg,#3f99ff,#8cc8ff);animation:zs-load 1.1s ease-in-out infinite}
+      @keyframes zs-breathe{0%,100%{transform:scale(.92);opacity:.75}50%{transform:scale(1.08);opacity:1}}
+      @keyframes zs-draw{to{stroke-dashoffset:0}}
+      @keyframes zs-spin{to{transform:rotate(360deg)}}
+      @keyframes zs-pop{to{opacity:1;transform:scale(1) rotate(0)}}
+      @keyframes zs-sweep{to{left:130%}}
+      @keyframes zs-rise{from{opacity:0;transform:translateY(16px);filter:blur(5px)}to{opacity:1;transform:none;filter:none}}
+      @keyframes zs-fade{to{opacity:1}}
+      @keyframes zs-load{0%{transform:translateX(-110%)}100%{transform:translateX(280%)}}
+      @media (prefers-reduced-motion:reduce){#zs-splash *{animation-duration:.01ms!important;animation-delay:0s!important;animation-iteration-count:1!important}}
+    </style>
+    <link rel="stylesheet" href="./shell.css" />
+  </head>
+  <body>
+    <div id="zs-splash" aria-hidden="true">
+      <div class="zs-glow"></div>
+      <div class="zs-stage">
+        <div class="zs-mark">
+          <svg class="zs-ring" viewBox="0 0 100 100">
+            <defs><linearGradient id="zs-grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3f99ff"/><stop offset="1" stop-color="#9fd2ff"/></linearGradient></defs>
+            <circle class="zs-ring-base" cx="50" cy="50" r="46"/>
+            <circle class="zs-ring-draw" cx="50" cy="50" r="46"/>
+            <g class="zs-orbit"><circle cx="50" cy="4" r="2.2"/></g>
+          </svg>
+          <div class="zs-logo-wrap"><img src="./shim/assets/zenoffice-logo.png" alt="" /></div>
+        </div>
+        <div class="zs-word"><span class="zs-zen" style="--i:0">Z</span><span class="zs-zen" style="--i:1">e</span><span class="zs-zen" style="--i:2">n</span><span class="" style="--i:3">O</span><span class="" style="--i:4">f</span><span class="" style="--i:5">f</span><span class="" style="--i:6">i</span><span class="" style="--i:7">c</span><span class="" style="--i:8">e</span></div>
+        <div class="zs-tag">Docs · Sheets · Slides · PDF · Markdown · HTML</div>
+        <div class="zs-bar"><i></i></div>
+      </div>
+    </div>
+    <script>
+      (function () {
+        var el = document.getElementById('zs-splash');
+        if (!el) return;
+        var t0 = performance.now(), MIN = 3500, MAX = 7000, done = false;
+        function finish() {
+          if (done) return;
+          done = true;
+          el.classList.add('zs-out');
+          document.documentElement.classList.remove('zs-boot');
+          window.__zenSplashDone = true;
+          setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 600);
+        }
+        function ready() {
+          var hv = document.getElementById('home-view');
+          return document.readyState === 'complete' && hv && hv.childElementCount > 0;
+        }
+        (function tick() {
+          var dt = performance.now() - t0;
+          if (dt >= MAX || (dt >= MIN && ready())) finish(); else setTimeout(tick, 80);
+        })();
+      })();
+    </script>
+    <div class="app" id="app">
+      <header class="tabbar" id="tabbar">
+        <div class="tabbar-leading">
+          <button class="icon-btn tabbar-menu" id="tabbar-menu" type="button" aria-label="Menu">
+            <svg viewBox="0 0 20 20" aria-hidden="true">
+              <path d="M3 5.5h14M3 10h14M3 14.5h14" />
+            </svg>
+          </button>
+        </div>
+        <div class="tabstrip" id="tabstrip" role="tablist" aria-label="Open files"></div>
+      </header>
+
+      <main class="workspace" id="workspace">
+        <section class="home" id="home">
+          <aside class="sidebar" id="sidebar">
+            <button class="brand" id="brand-home" type="button" aria-label="ZenOffice home">
+              <img class="brand-mark" src="./shim/assets/zenoffice-logo.png" alt="" />
+              <span class="brand-word">ZenOffice</span>
+            </button>
+
+            <nav class="sidebar-nav" aria-label="Library">
+              <button class="nav-item active" type="button" data-view="recent">
+                <svg viewBox="0 0 20 20" aria-hidden="true">
+                  <path d="M10 5v5l3.2 2M10 17a7 7 0 1 0 0-14 7 7 0 0 0 0 14Z" />
+                </svg>
+                <span class="nav-label">Recent</span>
+              </button>
+              <button class="nav-item" type="button" data-view="starred">
+                <svg viewBox="0 0 20 20" aria-hidden="true">
+                  <path d="m10 3 2.1 4.3 4.7.7-3.4 3.3.8 4.7-4.2-2.2-4.2 2.2.8-4.7L3.2 8l4.7-.7L10 3Z" />
+                </svg>
+                <span class="nav-label">Starred</span>
+              </button>
+              <button class="nav-item" type="button" data-view="files">
+                <svg viewBox="0 0 20 20" aria-hidden="true">
+                  <path d="M3 6.2c0-.7.6-1.2 1.3-1.2h3l1.5 1.7h6.9c.7 0 1.3.6 1.3 1.3v6c0 .7-.6 1.3-1.3 1.3H4.3c-.7 0-1.3-.6-1.3-1.3V6.2Z" />
+                </svg>
+                <span class="nav-label">Files</span>
+              </button>
+            </nav>
+
+            <div class="sidebar-divider"></div>
+            <div class="sidebar-label">Workspace</div>
+            <nav class="sidebar-nav sidebar-nav-apps" aria-label="Create">
+              <button class="nav-item app-nav" type="button" data-new="docx">
+                <img src="./shim/assets/file-docx.png" alt="" />
+                <span class="nav-label">Docs</span>
+              </button>
+              <button class="nav-item app-nav" type="button" data-new="xlsx">
+                <img src="./shim/assets/file-xlsx.png" alt="" />
+                <span class="nav-label">Sheets</span>
+              </button>
+              <button class="nav-item app-nav" type="button" data-new="pptx">
+                <img src="./shim/assets/file-pptx.png" alt="" />
+                <span class="nav-label">Slides</span>
+              </button>
+              <button class="nav-item app-nav" type="button" data-new="pdf">
+                <img src="./shim/assets/file-pdf.png" alt="" />
+                <span class="nav-label">PDF</span>
+              </button>
+            </nav>
+
+            <div class="sidebar-foot">
+              <button class="open-local" id="open-local" type="button">
+                <svg viewBox="0 0 20 20" aria-hidden="true">
+                  <path d="M10 13V4M6.8 7.2 10 4l3.2 3.2M4 14v1.5c0 .8.7 1.5 1.5 1.5h9c.8 0 1.5-.7 1.5-1.5V14" />
+                </svg>
+                <span class="open-local-label">Open local file</span>
+              </button>
+              <button class="storage-note" id="about-button" type="button">
+                <span class="storage-dot"></span>
+                <span class="storage-copy">
+                  <b>On this device</b>
+                  <small>Documents/ZenOffice</small>
+                </span>
+              </button>
+            </div>
+          </aside>
+
+          <section class="home-main">
+            <div class="home-scroll" id="home-scroll">
+              <div id="home-view"></div>
+            </div>
+          </section>
+        </section>
+
+        <div class="frames" id="frames"></div>
+        <div class="frame-loading" id="frame-loading" hidden>
+          <span class="spinner"></span>
+          <span>Opening…</span>
+        </div>
+      </main>
+    </div>
+
+    <div class="popover" id="popover" hidden>
+      <button type="button" data-command="open">Open file…</button>
+      <button type="button" data-command="new-default">New file (default format)</button>
+      <button type="button" data-command="new-docx">New document</button>
+      <button type="button" data-command="new-xlsx">New spreadsheet</button>
+      <button type="button" data-command="new-pptx">New presentation</button>
+      <button type="button" data-command="new-md">New Markdown note</button>
+      <button type="button" data-command="new-html">New HTML page</button>
+      <button type="button" data-command="new-pdf">New PDF</button>
+      <div class="popover-sep"></div>
+      <button type="button" data-command="theme">Toggle dark mode</button>
+      <button type="button" data-command="refresh">Refresh files</button>
+      <button type="button" data-command="close-others">Close other tabs</button>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="./shim/android-shim.js"></script>
+    <script src="./shell.js"></script>
+  </body>
+</html>

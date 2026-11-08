@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Preview</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      /*
+       * The HTML app expects a main-process protocol whose response is the
+       * current document buffer. On Android we serve this tiny page instead,
+       * then feed it the instrumented document over postMessage. It has to be
+       * a same-origin page (CSP frame-src 'self') and it must be reloadable with
+       * a cache-busting ?v= query, which a blob: URL is not.
+       */
+      ;(function () {
+        var rendered = false
+        function render(html) {
+          if (rendered) return
+          rendered = true
+          document.open()
+          document.write(String(html || '<!doctype html><body></body>'))
+          document.close()
+        }
+        addEventListener('message', function (event) {
+          var data = event.data
+          if (data && typeof data.__genofficeAndroidPreviewContent === 'string') {
+            render(data.__genofficeAndroidPreviewContent)
+          }
+        })
+        if (window.parent !== window) {
+          window.parent.postMessage({ __genofficeAndroidPreviewRequest: true }, '*')
+        }
+      })()
+    </script>
+  </body>
+</html>

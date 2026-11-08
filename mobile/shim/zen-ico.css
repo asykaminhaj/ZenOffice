@@ -1,0 +1,34 @@
+/* zen-ico: salinan blok ikon duotone dari zen-ribbon.css (untuk Markdown/HTML). Sinkronkan manual kalau blok di sana berubah. */
+/* ---- ikon duotone ZenOffice (zen-icons.ts) ---- */
+:root { --zi-b:#1f6fe5; --zi-bs:#d6e6ff; --zi-o:#f59a23; --zi-r:#e5484d; --zi-y:#f7c52d; --zi-g:#2fb170; --zi-gy:#8aa0bd; --zi-n:#3b4a63; --zi-w:#ffffff; }
+[data-theme='dark'] { --zi-b:#5aa8ff; --zi-bs:#27446f; --zi-o:#ffb04a; --zi-r:#ff7378; --zi-y:#ffd24d; --zi-g:#4cd08c; --zi-gy:#8ea3c0; --zi-n:#b9c7de; --zi-w:#33476a; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']):not([data-theme='dark']) { --zi-b:#5aa8ff; --zi-bs:#27446f; --zi-o:#ffb04a; --zi-r:#ff7378; --zi-y:#ffd24d; --zi-g:#4cd08c; --zi-gy:#8ea3c0; --zi-n:#b9c7de; --zi-w:#33476a; }
+}
+.zen-ico { display: block; overflow: visible; }
+.zen-ico .a, .zen-ico .oa, .zen-ico .ra, .zen-ico .ga, .zen-ico .n, .zen-ico .c { fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.zen-ico .a { stroke: var(--zi-b); } .zen-ico .oa { stroke: var(--zi-o); } .zen-ico .ra { stroke: var(--zi-r); }
+.zen-ico .ga { stroke: var(--zi-g); } .zen-ico .n { stroke: var(--zi-n); } .zen-ico .c { stroke: currentColor; }
+.zen-ico .s { fill: var(--zi-bs); stroke: var(--zi-b); stroke-width: 1.5; stroke-linejoin: round; }
+.zen-ico .cs { fill: color-mix(in srgb, currentColor 20%, transparent); stroke: currentColor; stroke-width: 1.5; stroke-linejoin: round; }
+.zen-ico .f { fill: var(--zi-b); } .zen-ico .o { fill: var(--zi-o); } .zen-ico .r { fill: var(--zi-r); }
+.zen-ico .y { fill: var(--zi-y); } .zen-ico .g { fill: var(--zi-g); } .zen-ico .gy { fill: var(--zi-gy); }
+.zen-ico .w { fill: var(--zi-w); stroke: var(--zi-b); stroke-width: 1; }
+.zen-ico .t { fill: var(--zen-ink); } .zen-ico .tb { fill: var(--zi-b); }
+button:disabled .zen-ico { opacity: 0.45; }
+.zen-ico .gya { fill: none; stroke: var(--zi-gy); stroke-width: 1.3; stroke-dasharray: 2 2; stroke-linecap: round; }
+.ribbon .zen-ico { color: inherit; }
+
+/* ---- ikon v2 (32x32): navy -> ink, biru -> accent, oranye tetap ---- */
+.zen-v2 .o{fill:none;stroke:#EE9A2B;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.zen-v2 .of{fill:#EE9A2B;stroke:none}
+.zen-v2 .k{fill:none;stroke:var(--zen-ink);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+.zen-v2 .kk{fill:none;stroke:var(--zen-ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.zen-v2 .b{fill:none;stroke:var(--zen-accent);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.zen-v2 .bb{fill:none;stroke:var(--zen-accent);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.zen-v2 .f{fill:var(--zen-accent);stroke:none}
+.zen-v2 .t{fill:var(--zen-card-bg);stroke:var(--zen-ink);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.zen-v2 .ta{fill:var(--zen-card-bg);stroke:var(--zen-accent);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.zen-v2 .w{fill:none;stroke:#fff;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.zen-v2 .n{font:700 9px sans-serif;fill:var(--zen-accent)}
+.zen-v2 .kf{fill:var(--zen-ink);stroke:none}

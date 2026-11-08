@@ -1,0 +1,8 @@
+/* zen-pal-slides: palet ikon duotone slides (Android) */
+:root { --zen-ink:#1f2328; --zen-card-bg:#ffffff; --zen-accent:#c43e1c; --zen-o:#f2a33a; --zi-b:#c43e1c; --zi-bs:#fbeae5; --zi-o:#f2a33a; }
+[data-theme='dark'] { --zen-ink:#e6e6e6; --zen-card-bg:#2c2c2c; --zen-accent:#e8663f; --zen-o:#ffc266; --zi-b:#e8663f; --zi-bs:#43261d; --zi-o:#ffc266; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']):not([data-theme='dark']) { --zen-ink:#e6e6e6; --zen-card-bg:#2c2c2c; --zen-accent:#e8663f; --zen-o:#ffc266; --zi-b:#e8663f; --zi-bs:#43261d; --zi-o:#ffc266; }
+}
+.zen-v2 .o { stroke: var(--zen-o); }
+.zen-v2 .of { fill: var(--zen-o); }

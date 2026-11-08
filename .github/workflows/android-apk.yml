@@ -1,0 +1,65 @@
+name: Android APK
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'mobile/**'
+      - '.github/workflows/android-apk.yml'
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - uses: android-actions/setup-android@v3
+
+      # Electron's postinstall downloads a binary we do not need for the web build.
+      - name: Install workspace dependencies
+        run: npm ci --ignore-scripts
+        env:
+          ELECTRON_SKIP_BINARY_DOWNLOAD: '1'
+
+      - name: Install Android SDK packages
+        run: sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0"
+
+      - name: Install Capacitor tooling
+        working-directory: mobile
+        run: npm ci --no-audit --no-fund
+
+      - name: Build renderers as web apps
+        run: node mobile/scripts/build-web.mjs
+
+      - name: Create Android project
+        working-directory: mobile
+        run: |
+          npx cap add android
+          npx cap sync android
+
+      - name: Apply Android fullscreen shell patch
+        working-directory: mobile
+        run: node scripts/patch-android.mjs
+
+      - name: Build debug APK
+        working-directory: mobile/android
+        run: ./gradlew assembleDebug --no-daemon
+        env:
+          GRADLE_OPTS: -Dorg.gradle.jvmargs=-Xmx3g
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: zenoffice-debug-apk
+          path: mobile/android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error

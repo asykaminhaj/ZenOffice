@@ -1,0 +1,180 @@
+/* ZenOffice ribbon skin untuk Docs. Hanya dimuat di build Android (build-web.mjs). */
+:root {
+  --zen-bar-bg: linear-gradient(180deg, #ececef 0%, #e6e7e9 100%);
+  --zen-card-bg: #ffffff;
+  --zen-card-border: rgb(0 0 0 / 8%);
+  --zen-card-shadow: 0 2px 10px rgb(0 0 0 / 8%);
+  --zen-ink: #1f2328;
+  --zen-accent: #1f6fe5;
+  --zen-accent-dark: #1858c0;
+  --zen-accent-ink: #fff;
+  --zen-hover: rgb(31 111 229 / 10%);
+}
+[data-theme='dark'] {
+  --zen-bar-bg: linear-gradient(180deg, #282828 0%, #252525 100%);
+  --zen-card-bg: #2c2c2c;
+  --zen-card-border: rgb(255 255 255 / 8%);
+  --zen-card-shadow: 0 2px 12px rgb(0 0 0 / 35%);
+  --zen-ink: #e6e6e6;
+  --zen-accent: #4a9eff;
+  --zen-accent-dark: #3a8eef;
+  --zen-accent-ink: #06132b;
+  --zen-hover: rgb(74 158 255 / 16%);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']):not([data-theme='dark']) {
+    --zen-bar-bg: linear-gradient(180deg, #282828 0%, #252525 100%);
+    --zen-card-bg: #2c2c2c;
+    --zen-card-border: rgb(255 255 255 / 8%);
+    --zen-card-shadow: 0 2px 12px rgb(0 0 0 / 35%);
+    --zen-ink: #e6e6e6;
+    --zen-accent: #4a9eff;
+    --zen-accent-dark: #3a8eef;
+    --zen-accent-ink: #06132b;
+    --zen-hover: rgb(74 158 255 / 16%);
+  }
+}
+
+.ribbon { background: var(--zen-bar-bg); border-bottom: 0; color: var(--zen-ink); }
+.ribbon .ribbon-tabs { padding-top: 6px; gap: 4px; }
+.ribbon .ribbon-tab { color: var(--zen-ink); font-weight: 600; border-radius: 8px 8px 0 0; }
+.ribbon .ribbon-tab.active { color: var(--zen-accent); font-weight: 600; }
+.ribbon .ribbon-tab-file {
+  background: var(--zen-accent); color: var(--zen-accent-ink);
+  border-radius: 10px; padding: 6px 18px; font-weight: 600; margin-right: 6px;
+}
+.ribbon .ribbon-tab-file:hover, .ribbon .ribbon-tab-file.open { background: var(--zen-accent-dark); color: var(--zen-accent-ink); }
+.ribbon .qa-btn { color: var(--zen-accent); border-radius: 8px; }
+.ribbon .qa-btn:hover:not(:disabled) { background: var(--zen-hover); }
+.ribbon .ribbon-body {
+  background: var(--zen-card-bg); border: 1px solid var(--zen-card-border);
+  border-radius: 14px; box-shadow: var(--zen-card-shadow); margin: 6px 8px 8px;
+}
+.ribbon .ribbon-group-label { color: var(--zen-ink); opacity: 0.7; }
+
+/* ---- latar meja kerja + status bar ---- */
+:root {
+  --zen-desk: linear-gradient(180deg, #e8e8e8 0%, #e3e3e3 100%);
+  --zen-status-bg: #f3f4f6;
+}
+[data-theme='dark'] {
+  --zen-desk: linear-gradient(180deg, #2c2c2c 0%, #2a2a2a 100%);
+  --zen-status-bg: #252525;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']):not([data-theme='dark']) {
+    --zen-desk: linear-gradient(180deg, #2c2c2c 0%, #2a2a2a 100%);
+    --zen-status-bg: #252525;
+  }
+}
+.app-main, .app-content, .editor-scroll { background: var(--zen-desk); }
+.status-bar {
+  background: var(--zen-status-bg);
+  border-top: 1px solid var(--zen-card-border);
+  color: var(--zen-ink);
+}
+.status-bar .status-item, .status-bar .status-msg { color: var(--zen-ink); }
+
+/* ---- bar kanan atas: Search / Comments / Editing / Share ---- */
+.ribbon .ribbon-tabs.ribbon-tabs-win { padding-right: 10px; }
+.zen-top { display: flex; align-items: center; gap: 8px; padding-bottom: 4px; flex-shrink: 0; }
+.zen-dd { position: relative; }
+.zen-pill {
+  display: flex; align-items: center; gap: 6px; height: 32px; padding: 0 14px;
+  border-radius: 10px; border: 1px solid var(--zen-card-border);
+  background: var(--zen-card-bg); color: var(--zen-ink);
+  font-size: 13px; font-weight: 500; cursor: pointer; white-space: nowrap;
+}
+.zen-pill svg { color: var(--zen-accent); }
+.zen-pill:hover:not(:disabled) { background: var(--zen-hover); }
+.zen-pill:disabled { opacity: 0.45; cursor: default; }
+.zen-pill.zen-share { background: var(--zen-accent); border-color: var(--zen-accent); color: var(--zen-accent-ink); }
+.zen-pill.zen-share svg { color: var(--zen-accent-ink); }
+.zen-pill.zen-share:hover:not(:disabled) { background: var(--zen-accent-dark); }
+.zen-menu {
+  position: absolute; top: calc(100% + 6px); right: 0; min-width: 170px; z-index: 60;
+  padding: 4px; border-radius: 12px; border: 1px solid var(--zen-card-border);
+  background: var(--zen-card-bg); box-shadow: var(--zen-card-shadow);
+}
+.zen-menu button {
+  display: flex; align-items: center; gap: 10px; width: 100%; height: 38px; padding: 0 12px;
+  border: 0; border-radius: 8px; background: none; color: var(--zen-ink); font-size: 13px; cursor: pointer;
+}
+.zen-menu button svg { color: var(--zen-accent); }
+.zen-menu button:hover, .zen-menu button.on { background: var(--zen-hover); }
+.zen-menu button.on { font-weight: 600; }
+
+/* ---- ikon: biru aksen (Pen/Highlighter tetap warna pilihan lewat style inline) ---- */
+.ribbon .rb-big-icon { color: var(--zen-accent); }
+.ribbon .rb-big-icon .rb-caret-svg { color: var(--zen-ink); opacity: 0.6; }
+.ribbon .rb-big:hover:not(:disabled) .rb-big-icon { background: var(--zen-hover); }
+.ribbon .rb-big.active .rb-big-icon { background: var(--zen-hover); }
+.ribbon .rb-big { color: var(--zen-ink); }
+
+/* ---- zen read mode (Viewing): latar tema + tombol Exit ---- */
+.read-mode .editor-scroll { background: var(--zen-desk); }
+.read-exit {
+  border: 0; background: var(--zen-accent); color: var(--zen-accent-ink);
+  height: 34px; padding: 0 18px; font-size: 13px; font-weight: 600;
+  box-shadow: var(--zen-card-shadow);
+}
+.read-exit:hover { background: var(--zen-accent-dark); }
+
+/* ---- ikon duotone ZenOffice (zen-icons.ts) ---- */
+:root { --zi-b:#1f6fe5; --zi-bs:#d6e6ff; --zi-o:#f59a23; --zi-r:#e5484d; --zi-y:#f7c52d; --zi-g:#2fb170; --zi-gy:#8aa0bd; --zi-n:#3b4a63; --zi-w:#ffffff; }
+[data-theme='dark'] { --zi-b:#5aa8ff; --zi-bs:#27446f; --zi-o:#ffb04a; --zi-r:#ff7378; --zi-y:#ffd24d; --zi-g:#4cd08c; --zi-gy:#8ea3c0; --zi-n:#b9c7de; --zi-w:#33476a; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']):not([data-theme='dark']) { --zi-b:#5aa8ff; --zi-bs:#27446f; --zi-o:#ffb04a; --zi-r:#ff7378; --zi-y:#ffd24d; --zi-g:#4cd08c; --zi-gy:#8ea3c0; --zi-n:#b9c7de; --zi-w:#33476a; }
+}
+.zen-ico { display: block; overflow: visible; }
+.zen-ico .a, .zen-ico .oa, .zen-ico .ra, .zen-ico .ga, .zen-ico .n, .zen-ico .c { fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.zen-ico .a { stroke: var(--zi-b); } .zen-ico .oa { stroke: var(--zi-o); } .zen-ico .ra { stroke: var(--zi-r); }
+.zen-ico .ga { stroke: var(--zi-g); } .zen-ico .n { stroke: var(--zi-n); } .zen-ico .c { stroke: currentColor; }
+.zen-ico .s { fill: var(--zi-bs); stroke: var(--zi-b); stroke-width: 1.5; stroke-linejoin: round; }
+.zen-ico .cs { fill: color-mix(in srgb, currentColor 20%, transparent); stroke: currentColor; stroke-width: 1.5; stroke-linejoin: round; }
+.zen-ico .f { fill: var(--zi-b); } .zen-ico .o { fill: var(--zi-o); } .zen-ico .r { fill: var(--zi-r); }
+.zen-ico .y { fill: var(--zi-y); } .zen-ico .g { fill: var(--zi-g); } .zen-ico .gy { fill: var(--zi-gy); }
+.zen-ico .w { fill: var(--zi-w); stroke: var(--zi-b); stroke-width: 1; }
+.zen-ico .t { fill: var(--zen-ink); } .zen-ico .tb { fill: var(--zi-b); }
+button:disabled .zen-ico { opacity: 0.45; }
+.zen-ico .gya { fill: none; stroke: var(--zi-gy); stroke-width: 1.3; stroke-dasharray: 2 2; stroke-linecap: round; }
+.ribbon .zen-ico { color: inherit; }
+
+/* ---- ikon v2 (32x32): navy -> ink, biru -> accent, oranye tetap ---- */
+.zen-v2 .o{fill:none;stroke:#EE9A2B;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.zen-v2 .of{fill:#EE9A2B;stroke:none}
+.zen-v2 .k{fill:none;stroke:var(--zen-ink);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+.zen-v2 .kk{fill:none;stroke:var(--zen-ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.zen-v2 .b{fill:none;stroke:var(--zen-accent);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.zen-v2 .bb{fill:none;stroke:var(--zen-accent);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.zen-v2 .f{fill:var(--zen-accent);stroke:none}
+.zen-v2 .t{fill:var(--zen-card-bg);stroke:var(--zen-ink);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.zen-v2 .ta{fill:var(--zen-card-bg);stroke:var(--zen-accent);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.zen-v2 .w{fill:none;stroke:#fff;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.zen-v2 .n{font:700 9px sans-serif;fill:var(--zen-accent)}
+.zen-v2 .kf{fill:var(--zen-ink);stroke:none}
+
+/* zen-tab-anim: animasi pindah tab ribbon (Android) */
+.ribbon-tabs .ribbon-tab:not(.ribbon-tab-file) { transition: color .2s ease, background-color .2s ease, opacity .2s ease; }
+.ribbon-tabs .ribbon-tab.active::after { animation: zen-tab-line .26s cubic-bezier(.2,.7,.2,1) backwards; }
+@keyframes zen-tab-line { from { clip-path: inset(0 50% 0 50%); opacity: .4; } to { clip-path: inset(0 0 0 0); opacity: 1; } }
+.ribbon-body > * { animation: zen-tab-in .2s ease-out backwards; }
+@keyframes zen-tab-in { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .ribbon-tabs .ribbon-tab:not(.ribbon-tab-file) { transition: none; }
+  .ribbon-tabs .ribbon-tab.active::after, .ribbon-body > * { animation: none; }
+}
+
+/* zen-tab-fit: tinggi baris tab Docs disamakan dengan Slides/Sheets/PDF */
+.zen-top { padding-bottom: 0; }
+.zen-pill { height: 28px; padding: 0 12px; }
+@media (min-width: 900px) {
+  .ribbon .ribbon-tab { white-space: nowrap; }
+}
+
+/* Tombol kanan Docs: sempit -> ikon saja (aria-label tetap jadi tooltip/aksesibilitas) */
+@media (max-width: 899px) {
+  .zen-top { gap: 6px; }
+  .zen-top .zen-pill { padding: 0 8px; min-width: 32px; justify-content: center; gap: 4px; }
+  .zen-top .zen-pill > span { display: none; }
+}
