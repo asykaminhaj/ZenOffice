@@ -27,7 +27,9 @@ aslinya.
 - **Layar utama dengan file terbaru dan indeks lokal** untuk dokumen di
   Documents/ZenOffice (gunakan Refresh Index setelah menambah file).
 - **Buka file dari aplikasi lain** dan dari file manager.
-- **Simpan sebagai PDF dan Cetak** dari aplikasi dokumen.
+- **Ekspor dan cetak:** ekspor dari Docs, Slides, dan PDF (termasuk Word ke PDF), dan cetak Docs lewat dialog cetak Android.
+- **Alat PDF:** edit teks, tambah anotasi, isi formulir, dan simpan PDF.
+- **Aman saat mengedit:** aplikasi menanyakan simpan sebelum dokumen ditutup, dan Docs serta Sheets punya auto-recovery.
 - **Dibuat untuk layar sentuh:** tampilan layar penuh dan antarmuka yang ramah
   tablet.
 
@@ -70,9 +72,8 @@ Diuji di Android 16 (arm64).
 
 - Ini perangkat lunak beta: cadangkan dokumen penting sebelum mengeditnya.
 - Dokumen yang sangat besar bisa lambat dibuka dan diedit.
-- Sebagian fitur lanjutan dari GenOffice desktop tidak tersedia (lihat di
-  bawah).
-
+- Autosave mati secara default; aplikasi menanyakan simpan sebelum dokumen yang belum disimpan ditutup.
+- Sebagian fitur lanjutan dari GenOffice desktop tidak tersedia (lihat di bawah).
 ## Perbedaan dengan GenOffice
 
 ZenOffice adalah port Android, jadi tidak identik dengan aplikasi desktop.

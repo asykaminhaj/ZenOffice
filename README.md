@@ -26,7 +26,9 @@ PowerPoint files are opened and saved in their real formats.
 - **Home screen with recent files and a local index** of the documents in
   Documents/ZenOffice (use Refresh Index after adding files).
 - **Open files from other apps** and from your file manager.
-- **Save as PDF and Print** from the document apps.
+- **Export and print:** export from Docs, Slides and PDF (including Word to PDF), and print Docs through the Android print dialog.
+- **PDF tools:** edit text, add annotations, fill in forms and save the PDF.
+- **Safe editing:** the app asks to save before you close a document, and Docs and Sheets have auto-recovery.
 - **Built for touch:** immersive full-screen layout and tablet-friendly UI.
 
 ## Screenshots
@@ -68,9 +70,8 @@ Tested on Android 16 (arm64).
 
 - Beta software: back up important documents before editing them.
 - Very large documents can be slow to open and edit.
-- Some advanced features from the desktop GenOffice are not available (see
-  below).
-
+- Autosave is off by default; the app asks to save before you close a document with unsaved changes.
+- Some advanced features from the desktop GenOffice are not available (see below).
 ## Differences from GenOffice
 
 ZenOffice is an Android port, so it is not identical to the desktop app.
