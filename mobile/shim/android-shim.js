@@ -3268,7 +3268,7 @@
     exportDocx: async function(request) { return UNSUPPORTED },
   }
 
-  // ---------- PDF (pdf-lib host; PDFium-only text/redaction stays desktop) ----------
+  // ---------- PDF (pdf-lib + PDFium wasm host, same save stages as desktop) ----------
 
   function pdfTools() {
     var tools = window.__genofficePdfTools
@@ -3296,6 +3296,10 @@
     var rel = await uniquePath(documentPath(name || 'Untitled.pdf'))
     return putPdf(rel, bytes)
   }
+
+  // Save As requests the PDF renderer answers (used by the redaction copy flow)
+  var pdfSaveAsListeners = []
+  var pdfSaveAsWaiter = null
 
   var pdf = {
     consumePending: async function () {
@@ -3331,15 +3335,28 @@
     },
     validateTextEdits: async function (request) {
       var edits = (request && request.edits) || []
-      return edits.map(function () {
-        return { reason: 'Editing teks langsung membutuhkan PDFium dan belum tersedia di Android' }
-      })
+      try {
+        return await pdfTools().validateTextEdits(await bytesFor(request.path), edits)
+      } catch (e) {
+        var reason = 'Editing teks gagal disiapkan: ' + String((e && e.message) || e)
+        return edits.map(function () {
+          return { reason: reason }
+        })
+      }
     },
     listEditFonts: async function () {
-      return []
+      try {
+        return await pdfTools().listEditFonts()
+      } catch (e) {
+        return []
+      }
     },
-    canDrawText: async function () {
-      return false
+    canDrawText: async function (text, font, bold, italic) {
+      try {
+        return !!(await pdfTools().canDrawText(String(text || ''), font || undefined, !!bold, !!italic))
+      } catch (e) {
+        return false
+      }
     },
     listPageImages: async function () {
       return []
@@ -3352,14 +3369,12 @@
         if (!request || typeof request.path !== 'string') {
           return { ok: false, error: 'PDF path tidak valid' }
         }
-        if (request.redactions && request.redactions.length) {
-          return {
-            ok: false,
-            error: 'Redaksi permanen membutuhkan PDFium dan belum tersedia di Android. Simpan salinan biasa terlebih dahulu.',
-          }
-        }
         var source = request.path
         var target = typeof request.targetPath === 'string' ? request.targetPath : source
+        if (request.redactions && request.redactions.length && documentPath(target) === documentPath(source)) {
+          // Same rule as desktop: redaction only ever writes a separate copy
+          return { ok: false, error: 'Redaksi hanya bisa disimpan sebagai salinan baru.' }
+        }
         var body = Object.assign(
           {
             markups: [],
@@ -3538,8 +3553,25 @@
         return { ok: false, error: String((e && e.message) || e) }
       }
     },
-    requestRedactionCopy: async function () {
-      return null
+    requestRedactionCopy: async function (path) {
+      // Desktop asks for a destination with a save dialog; Android writes
+      // "<name>-redacted.pdf" next to the original in Documents/ZenOffice.
+      if (typeof path !== 'string' || pdfSaveAsWaiter || !pdfSaveAsListeners.length) return false
+      var name = baseName(path).replace(/\.pdf$/i, '') + '-redacted.pdf'
+      var target = await uniquePath(documentPath(name))
+      var result = new Promise(function (resolve) {
+        pdfSaveAsWaiter = resolve
+      })
+      pdfSaveAsListeners.slice().forEach(function (cb) {
+        cb(target)
+      })
+      // putPdf already notified the shell; the renderer reopens the redacted copy
+      return !!(await result)
+    },
+    sendSaveAsResult: function (ok) {
+      var done = pdfSaveAsWaiter
+      pdfSaveAsWaiter = null
+      if (done) done(!!ok)
     },
     dirtyChanged: function (dirty) {
       notifyShell('dirty', { dirty: !!dirty })
@@ -3551,7 +3583,15 @@
     reportCloseSaveResult: noop,
     onSaveRequest: unsubscribe,
     onSaveAsFlow: unsubscribe,
-    onSaveAsRequest: unsubscribe,
+    onSaveAsRequest: function (cb) {
+      if (typeof cb !== 'function') return noop
+      pdfSaveAsListeners.push(cb)
+      return function () {
+        pdfSaveAsListeners = pdfSaveAsListeners.filter(function (x) {
+          return x !== cb
+        })
+      }
+    },
     consumeHeadlessExport: async function () {
       return null
     },

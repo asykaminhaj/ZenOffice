@@ -23,7 +23,8 @@ Sudah diverifikasi di perangkat Android 16 (arm64, SDK 36) dengan APK debug ±40
 - Sheets: buka/edit/simpan `.xlsx`; formula, style, merge, lebar kolom, dan sheet lain tetap ada.
 - Markdown: buka, edit, simpan; isi file berubah di disk.
 - HTML: preview berjalan, mode Split/Source, edit, simpan; isi file berubah di disk.
-- PDF: buka dan render halaman (canvas + text layer).
+- PDF: buka dan render halaman (canvas + text layer); anotasi, form, stempel, operasi halaman,
+  edit teks langsung, sisip teks, dan redaksi permanen tersimpan (PDFium berjalan sebagai wasm).
 - Slides: buka `.pptx`, render slide, edit teks/judul, font, fill, stroke, text anchor, tabel, chart,
   gambar, duplicate/delete slide, undo/redo, Save, Save As, dan buka ulang. Roundtrip `.pptx`
   terverifikasi di perangkat; AutoSave 30 detik juga menulis perubahan ke disk.
@@ -39,7 +40,7 @@ File disimpan di `Documents/GenOffice/`. AutoSave default-nya **aktif** karena b
 | Sheets | `.xlsx` | Ya | SheetJS untuk baca, ExcelJS untuk simpan; style/merge/width/part lain dipertahankan |
 | Markdown | `.md`, `.markdown`, `.txt` | Ya | Save dan Save As |
 | HTML | `.html`, `.htm` | Ya | Preview same-origin, script halaman ikut jalan |
-| PDF | `.pdf` | Tidak | Hanya baca; anotasi/form/edit belum disimpan |
+| PDF | `.pdf` | Ya | Anotasi, form, edit/sisip teks, redaksi (salinan `-redacted.pdf`); edit gambar di dalam PDF belum |
 | Slides | `.pptx` | Ya | Engine PPTX asli dijalankan di WebView; roundtrip teks/tabel/chart/gambar terverifikasi |
 
 ## Arsitektur Android
@@ -55,6 +56,8 @@ slides-host/src/vfs.ts                  filesystem in-memory untuk engine PPTX
 slides-host/src/stubs/                  modul desktop-only (AI, print, PDF export) yang inert
 scripts/build-web.mjs                   build renderer terpilih + build Slides host + copy shell
 scripts/build-slides-host.mjs           bundle host Slides dengan esbuild
+scripts/build-pdf-tools.mjs             bundle alat PDF (pdf-lib + PDFium wasm) + salin wasm/font
+pdf-tools/src/browser/                  pengganti modul Node (fs, crypto, font) untuk tahap PDFium
 scripts/patch-android.mjs               patch MainActivity/styles untuk immersive fullscreen
 ```
 
@@ -130,8 +133,9 @@ CI di x86_64 tidak butuh trik ini.
 
 - **Slides**: fokus verifikasi baru pada `.pptx` modern. `.ppt` legacy, `.pptm` ber-macro, `.odp`,
   dan deck terenkripsi belum diuji dan bisa ditolak.
-- **PDF**: render/baca jalan, tetapi edit teks, anotasi, form filling, split/merge, OCR, dan simpan
-  belum di-port.
+- **PDF**: edit gambar yang sudah ada di dalam PDF (butuh `nativeImage` Electron) dan OCR belum
+  di-port. Font yang tersedia untuk teks baru/pengganti hanya Liberation Sans (pengganti Arial);
+  edit yang memakai font bawaan PDF tetap memakai font aslinya.
 - **Print/export**: tombol Print, Export PDF, dan Export Images masih ada di menu Slides desktop,
   tetapi pipeline native/headless-nya belum tersedia di Android dan belum menjadi target pass ini.
 - **Tampilan Sheets**: nilai, formula, merge, lebar kolom, dan sheet lain dipertahankan saat save,

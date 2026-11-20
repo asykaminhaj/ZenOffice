@@ -1,14 +1,16 @@
 /**
  * Browser-side PDF toolkit for the Android build.
  *
- * The desktop pdf-lib stages are reused verbatim; only the PDFium stages
- * (text/image content-stream edits and permanent redaction) are replaced by
- * no-op/stub modules in ./browser. Annotations, forms, stamps, drawings, page
- * operations and metadata all stay byte-compatible with the desktop app.
+ * The desktop pdf-lib and PDFium stages are reused verbatim. PDFium runs as
+ * WebAssembly (@embedpdf/pdfium), so direct text editing, text insertion,
+ * annotation deletion and permanent redaction behave like the desktop app.
+ * Node-only pieces (fs, crypto, wasm paths, the system font index) are swapped
+ * for the modules in ./browser by build-pdf-tools.mjs. Only content-stream
+ * image edits stay stubbed: they decode images with Electron's nativeImage.
  */
 import { PDFDocument } from 'pdf-lib'
 import {
-  applySaveRequest,
+  applySaveRequest as desktopApplySaveRequest,
   cropPagesBytes,
   extractPagesBytes,
   insertBlankPageBytes,
@@ -21,7 +23,41 @@ import {
   splitPagesBytes,
   splitPdfBytes,
 } from '../../../apps/pdf/src/main/save-pdf'
-import type { SavePdfRequest } from '../../../apps/pdf/src/shared/ipc'
+import { canDrawText, listEditFonts, validateTextEdits } from '../../../apps/pdf/src/main/text-edit'
+import type { SavePdfRequest, TextEditInput } from '../../../apps/pdf/src/shared/ipc'
+import { ensurePdfiumAssets } from './browser/assets'
+
+type SaveInput = Omit<SavePdfRequest, 'path' | 'targetPath'>
+
+function needsPdfium(request: SaveInput): boolean {
+  return Boolean(
+    request.textEdits?.length ||
+      request.textInserts?.length ||
+      request.annotDeletes?.length ||
+      request.redactions?.length,
+  )
+}
+
+/** Same as the desktop save, but loads the PDFium wasm and fonts first when a stage needs them */
+async function applySaveRequest(bytes: Uint8Array, request: SaveInput) {
+  if (needsPdfium(request)) await ensurePdfiumAssets()
+  return desktopApplySaveRequest(bytes, request as never)
+}
+
+async function validateTextEditsBytes(bytes: Uint8Array, edits: TextEditInput[]) {
+  await ensurePdfiumAssets()
+  return validateTextEdits(bytes, edits)
+}
+
+async function listEditFontsReady(): Promise<string[]> {
+  await ensurePdfiumAssets()
+  return listEditFonts()
+}
+
+async function canDrawTextReady(text: string, font?: string, bold = false, italic = false) {
+  await ensurePdfiumAssets()
+  return canDrawText(text, font, bold, italic)
+}
 
 function toBase64(bytes: Uint8Array): string {
   let bin = ''
@@ -51,6 +87,10 @@ async function mergeBase64(parts: string[]): Promise<Uint8Array> {
 
 const api = {
   applySaveRequest,
+  validateTextEdits: validateTextEditsBytes,
+  listEditFonts: listEditFontsReady,
+  canDrawText: canDrawTextReady,
+  ensurePdfiumAssets,
   cropPagesBytes,
   extractPagesBytes,
   insertBlankPageBytes,
