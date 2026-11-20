@@ -11,7 +11,7 @@
  * Run: node mobile/scripts/patch-android.mjs
  */
 
-import { copyFileSync, cpSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { copyFileSync, cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -155,7 +155,13 @@ public class MainActivity extends BridgeActivity {
 }
 `
 
+// `cap add` generates MainActivity under the appId package (com.minhaj.zenoffice), but
+// the manifest resolves `.MainActivity` against the gradle namespace set below
+// (com.example.genoffice). Write ours there and drop the generated copy.
+mkdirSync(dirname(javaPath), { recursive: true })
 writeFileSync(javaPath, mainActivity)
+const generatedActivity = join(androidDir, 'app/src/main/java/com/minhaj/zenoffice/MainActivity.java')
+if (existsSync(generatedActivity)) rmSync(generatedActivity)
 
 // Native PDF export plugin (offscreen WebView -> PDF, no system print dialog).
 const nativeDir = join(mobileDir, 'native')
