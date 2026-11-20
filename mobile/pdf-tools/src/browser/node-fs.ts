@@ -14,7 +14,9 @@ export function registerFile(path: string, bytes: Uint8Array): void {
 }
 
 function enoent(path: string): Error {
-  const err = new Error(`ENOENT: no such file or directory, open '${path}'`) as Error & { code: string }
+  const err = new Error(`ENOENT: no such file or directory, open '${path}'`) as Error & {
+    code: string
+  }
   err.code = 'ENOENT'
   return err
 }

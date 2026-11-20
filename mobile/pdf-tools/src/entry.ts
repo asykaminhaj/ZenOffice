@@ -32,9 +32,9 @@ type SaveInput = Omit<SavePdfRequest, 'path' | 'targetPath'>
 function needsPdfium(request: SaveInput): boolean {
   return Boolean(
     request.textEdits?.length ||
-      request.textInserts?.length ||
-      request.annotDeletes?.length ||
-      request.redactions?.length,
+    request.textInserts?.length ||
+    request.annotDeletes?.length ||
+    request.redactions?.length,
   )
 }
 
